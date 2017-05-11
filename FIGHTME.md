@@ -51,6 +51,8 @@ If a subcommand or flag is used incorrectly, the program could say *what* was wr
 
 If a subcommand or flag was spelled wrong, the program could suggest corrections and exit with a non-zero error code.
 
+If possible, a help command should always show an example of the command or subcommand for which it was invoked.
+
 ### Flags Can Go Anywhere in a Command
 
 It doesn't matter where you put flags in a command.
@@ -136,6 +138,10 @@ Second, aside from position arguments have no meaning.
 If you ignore the position of the arguments to `mv` or `ln`, you have no idea which is the source and which is the destination.
 (Other usability issues here aside&hellip; source/destination confusion is really common.)
 
+Arguments should use `command from to` for data that flows in a direction. Think of `mv from to` or `cp from to`.
+
+Likewise, commands that are creating a resource should be in the form of `command create-from to-create`.
+
 #### Exceptions
 
 Sometimes an argument can repeat.
@@ -213,3 +219,14 @@ See the default behavior of `git` here: it lists the most common subcommands and
 Third, it could provide a nicer thing than either of those.
 This tool should enable creating pleasant user experience, so the programmer has the option of what to do.
 For example, if you run `git` it could ask you if you want to initialize a repository in the current directory.
+If a command accepts any subcommands, it should accept a `help` subcommand that displays a list of the available subcommands.
+
+### Input and Output
+
+Commands reading from files should accept `-` to indicate that they should read from `stdin` instead of disk.
+
+Commands writing to files should accept `-` to indicate that they should write to `stdout` instead of disk.
+
+When writing to `stdout` commands should detect whether or not it is a terminal before using control sequences.
+
+Output should be formatted for human readability when writing for a terminal, and machine readability when writing to a file.
